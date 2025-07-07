@@ -21,6 +21,23 @@
   {% endif %}
   {% endwith %}
 
+  <form method="GET" action="{{ url_for('admin.view_bookings') }}">
+    <input type="text" name="search" placeholder="Search name, email, session..."
+      value="{{ request.args.get('search', '') }}">
+
+    <select name="status">
+      <option value="">--Status--</option>
+      <option value="pending" {% if request.args.get('status')=='pending' %}selected{% endif %}>Pending</option>
+      <option value="confirmed" {% if request.args.get('status')=='confirmed' %}selected{% endif %}>Confirmed</option>
+      <option value="declined" {% if request.args.get('status')=='declined' %}selected{% endif %}>Declined</option>
+    </select>
+
+    <button type="submit">Filter</button>
+    <a href="{{ url_for('admin.view_bookings') }}">Reset</a>
+  </form>
+  <br>
+
+
   <table border="1" cellpadding="10">
     <tr>
       <th>Name</th>

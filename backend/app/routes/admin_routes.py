@@ -4,6 +4,7 @@ from app.forms.blog_post_form import BlogPostForm
 from flask import get_flashed_messages
 from app.models import BlogPost, Booking, db
 from slugify import slugify
+from sqlalchemy import or_, func
 
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
@@ -66,7 +67,26 @@ def delete_post(post_id):
 @admin_bp.route('/bookings')
 @login_required
 def view_bookings():
-    bookings = Booking.query.order_by(Booking.created_at.desc()).all()
+    status = request.args.get('status')
+    search = request.args.get('search')
+
+    query = Booking.query
+
+    if status:
+        query = query.filter(Booking.status == status)
+
+    if search:
+        search_term = f"%{search.lower()}%"
+        query = query.filter(
+            or_(
+                func.lower(Booking.name).like(search_term),
+                func.lower(Booking.email).like(search_term),
+                func.lower(Booking.session_type).like(search_term),
+                func.lower(Booking.date_requested).like(search_term)
+            )
+        )
+
+    bookings = query.order_by(Booking.created_at.desc()).all()
     return render_template('admin/bookings.html', bookings=bookings)
 
 # Update status
