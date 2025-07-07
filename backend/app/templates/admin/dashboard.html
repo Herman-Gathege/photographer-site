@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Admin Dashboard</title>
+</head>
+
+<body>
+  <h1>Welcome, {{ user.username }}!</h1>
+  <p><a href="{{ url_for('auth.logout') }}">Logout</a></p>
+  <h2>Blog Posts</h2>
+  <a href="{{ url_for('admin.create_post') }}">+ New Post</a>
+  <ul>
+    {% for post in posts %}
+    <li>
+      <strong>{{ post.title }}</strong>
+      ({{ post.created_at.strftime('%Y-%m-%d') }})
+      — <a href="{{ url_for('admin.edit_post', post_id=post.id) }}">Edit</a>
+
+      <form action="{{ url_for('admin.delete_post', post_id=post.id) }}" method="POST" style="display:inline;">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" onclick="return confirm('Delete this post?')">Delete</button>
+      </form>
+
+      
+    </li>
+    {% else %}
+    <p>No blog posts yet.</p>
+    <p>Found {{ posts|length }} posts</p>
+
+    {% endfor %}
+  </ul>
+</body>
+
+</html>

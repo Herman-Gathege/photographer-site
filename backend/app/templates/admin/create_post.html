@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head><title>Create Blog Post</title></head>
+<body>
+  <h1>Create Blog Post</h1>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    <p>{{ form.title.label }}<br>{{ form.title() }}</p>
+    <p>{{ form.content.label }}<br>{{ form.content() }}</p>
+    <p>{{ form.image_url.label }}<br>{{ form.image_url() }}</p>
+    <p>{{ form.submit() }}</p>
+  </form>
+  <a href="{{ url_for('admin.dashboard') }}">← Back to Dashboard</a>
+</body>
+</html>
