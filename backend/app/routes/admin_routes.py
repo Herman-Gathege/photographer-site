@@ -1,9 +1,11 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
 from app.forms.blog_post_form import BlogPostForm
+from app.forms.change_credentials_form import ChangeCredentialsForm
 from flask import get_flashed_messages
-from app.models import BlogPost, Booking, db
+from app.models import BlogPost, Booking, User, db
 from slugify import slugify
+from werkzeug.security import generate_password_hash
 from sqlalchemy import or_, func
 
 
@@ -108,3 +110,16 @@ def delete_booking(booking_id):
     db.session.commit()
     flash('Booking deleted.', 'info')
     return redirect(url_for('admin.view_bookings'))
+
+
+@admin_bp.route('/update-credentials', methods=['GET', 'POST'])
+@login_required
+def update_credentials():
+    form = ChangeCredentialsForm()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.password = generate_password_hash(form.password.data)
+        db.session.commit()
+        flash("Credentials updated successfully!", "success")
+        return redirect(url_for('admin.dashboard'))
+    return render_template("admin/change_credentials.html", form=form)
