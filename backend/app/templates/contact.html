@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Book a Session | Webloom</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fafafa;
+      margin: 0;
+      padding: 2rem;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    button {
+      background: #111;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #333;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Book a Photography Session</h1>
+
+<form method="POST" action="{{ url_for('booking.submit_booking') }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+  <label for="name">Name</label>
+  <input type="text" name="name" required>
+
+  <label for="email">Email</label>
+  <input type="email" name="email" required>
+
+  <label for="session_type">Session Type</label>
+  <select name="session_type" required>
+    <option value="">--Select--</option>
+    <option value="Portrait">Portrait</option>
+    <option value="Wedding">Wedding</option>
+    <option value="Product">Product</option>
+    <option value="Event">Event</option>
+  </select>
+
+  <label for="date_requested">Preferred Date</label>
+  <input type="date" name="date_requested" required>
+
+  <label for="message">Message</label>
+  <textarea name="message" rows="5" placeholder="Anything you'd like to add..."></textarea>
+
+  <button type="submit">Submit Booking</button>
+</form>
+
+</body>
+</html>

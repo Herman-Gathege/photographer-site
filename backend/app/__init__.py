@@ -35,10 +35,12 @@ def create_app():
     from .routes.blog_routes import blog_bp
     from .routes.booking_routes import booking_bp
     from .routes.admin_routes import admin_bp
+    from .routes.main_routes import main_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(blog_bp)
     app.register_blueprint(booking_bp)
     app.register_blueprint(admin_bp)
+    app.register_blueprint(main_bp)
 
     return app

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome | Webloom Photography</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Helvetica', sans-serif;
+      background: #111;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5em;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5em;
+    }
+
+    a.button {
+      background: #fff;
+      color: #111;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    a.button:hover {
+      background: #f0f0f0;
+    }
+  </style>
+</head>
+
+<body>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <ul>
+    {% for category, message in messages %}
+    <li style="color: green;">{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
+
+  <h1>Webloom Photography</h1>
+  <p>Capturing moments that matter.</p>
+  <a href="{{ url_for('main.contact') }}" class="button">Book a Session</a>
+
+</body>
+
+</html>

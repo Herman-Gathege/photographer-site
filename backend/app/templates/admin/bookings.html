@@ -1,0 +1,70 @@
+<!-- templates/admin/bookings.html -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Admin - Bookings</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+  <h1>Booking Management</h1>
+  <a href="{{ url_for('admin.dashboard') }}">← Back to Dashboard</a>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <ul>
+    {% for category, message in messages %}
+    <li style="color: green;">{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
+
+  <table border="1" cellpadding="10">
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Session</th>
+      <th>Date</th>
+      <th>Message</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    {% for booking in bookings %}
+    <tr>
+      <td>{{ booking.name }}</td>
+      <td>{{ booking.email }}</td>
+      <td>{{ booking.session_type }}</td>
+      <td>{{ booking.date_requested }}</td>
+      <td>{{ booking.message }}</td>
+      <td>{{ booking.status }}</td>
+      <td>
+        <form action="{{ url_for('admin.update_booking_status', booking_id=booking.id, new_status='confirmed') }}"
+          method="POST" style="display:inline;">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+          <button type="submit">Confirm</button>
+        </form>
+        <form action="{{ url_for('admin.update_booking_status', booking_id=booking.id, new_status='declined') }}"
+          method="POST" style="display:inline;">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+          <button type="submit">Decline</button>
+        </form>
+        <form action="{{ url_for('admin.delete_booking', booking_id=booking.id) }}" method="POST"
+          style="display:inline;">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> <button type="submit"
+            onclick="return confirm('Delete this booking?')">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  {% if bookings|length == 0 %}
+  <p>No bookings yet.</p>
+  {% endif %}
+</body>
+
+</html>

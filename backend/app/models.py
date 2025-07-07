@@ -25,3 +25,5 @@ class Booking(db.Model):
     date_requested = db.Column(db.String(50))
     message = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    status = db.Column(db.String(50), default='pending')  # or confirmed/completed
+

@@ -8,6 +8,8 @@
 <body>
   <h1>Welcome, {{ user.username }}!</h1>
   <p><a href="{{ url_for('auth.logout') }}">Logout</a></p>
+  <p><a href="{{ url_for('admin.view_bookings') }}">Manage Bookings</a></p>
+
   <h2>Blog Posts</h2>
   <a href="{{ url_for('admin.create_post') }}">+ New Post</a>
   <ul>

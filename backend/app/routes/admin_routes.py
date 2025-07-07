@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
 from app.forms.blog_post_form import BlogPostForm
 from flask import get_flashed_messages
-from app.models import BlogPost, db
+from app.models import BlogPost, Booking, db
 from slugify import slugify
 
 
@@ -61,3 +61,30 @@ def delete_post(post_id):
     db.session.commit()
     flash("Post deleted!", "info")
     return redirect(url_for('admin.dashboard'))
+
+# View all bookings
+@admin_bp.route('/bookings')
+@login_required
+def view_bookings():
+    bookings = Booking.query.order_by(Booking.created_at.desc()).all()
+    return render_template('admin/bookings.html', bookings=bookings)
+
+# Update status
+@admin_bp.route('/bookings/<int:booking_id>/status/<string:new_status>', methods=['POST'])
+@login_required
+def update_booking_status(booking_id, new_status):
+    booking = Booking.query.get_or_404(booking_id)
+    booking.status = new_status
+    db.session.commit()
+    flash('Booking status updated.', 'success')
+    return redirect(url_for('admin.view_bookings'))
+
+# Delete booking
+@admin_bp.route('/bookings/<int:booking_id>/delete', methods=['POST'])
+@login_required
+def delete_booking(booking_id):
+    booking = Booking.query.get_or_404(booking_id)
+    db.session.delete(booking)
+    db.session.commit()
+    flash('Booking deleted.', 'info')
+    return redirect(url_for('admin.view_bookings'))
