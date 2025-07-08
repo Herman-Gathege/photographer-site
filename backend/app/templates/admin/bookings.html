@@ -8,80 +8,112 @@
 </head>
 
 <body>
-  <h1>Booking Management</h1>
-  <a href="{{ url_for('admin.dashboard') }}">← Back to Dashboard</a>
+  <div class="container">
 
-  {% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-  <ul>
-    {% for category, message in messages %}
-    <li style="color: green;">{{ message }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-  {% endwith %}
+    <h1>Booking Management</h1>
+    <a href="{{ url_for('admin.dashboard') }}">← Back to Dashboard</a>
 
-  <form method="GET" action="{{ url_for('admin.view_bookings') }}">
-    <input type="text" name="search" placeholder="Search name, email, session..."
-      value="{{ request.args.get('search', '') }}">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul>
+      {% for category, message in messages %}
+      <p class="flash-{{ category }}">{{ message }}</p>
+      {% endfor %}
 
-    <select name="status">
-      <option value="">--Status--</option>
-      <option value="pending" {% if request.args.get('status')=='pending' %}selected{% endif %}>Pending</option>
-      <option value="confirmed" {% if request.args.get('status')=='confirmed' %}selected{% endif %}>Confirmed</option>
-      <option value="declined" {% if request.args.get('status')=='declined' %}selected{% endif %}>Declined</option>
-    </select>
+    </ul>
+    {% endif %}
+    {% endwith %}
 
-    <button type="submit">Filter</button>
-    <a href="{{ url_for('admin.view_bookings') }}">Reset</a>
-  </form>
-  <br>
+    <form method="GET" action="{{ url_for('admin.view_bookings') }}">
+      <input type="text" name="search" placeholder="Search name, email, session..."
+        value="{{ request.args.get('search', '') }}">
+
+      <select name="status">
+        <option value="">--Status--</option>
+        <option value="pending" {% if request.args.get('status')=='pending' %}selected{% endif %}>Pending</option>
+        <option value="confirmed" {% if request.args.get('status')=='confirmed' %}selected{% endif %}>Confirmed</option>
+        <option value="declined" {% if request.args.get('status')=='declined' %}selected{% endif %}>Declined</option>
+      </select>
+
+      <button type="submit">Filter</button>
+      <a href="{{ url_for('admin.view_bookings') }}">Reset</a>
+    </form>
+    <br>
 
 
-  <table border="1" cellpadding="10">
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Session</th>
-      <th>Date</th>
-      <th>Message</th>
-      <th>Status</th>
-      <th>Actions</th>
-    </tr>
-    {% for booking in bookings %}
-    <tr>
-      <td>{{ booking.name }}</td>
-      <td>{{ booking.email }}</td>
-      <td>{{ booking.session_type }}</td>
-      <td>{{ booking.date_requested }}</td>
-      <td>{{ booking.message }}</td>
-      <td>{{ booking.status }}</td>
-      <td>
-        <form action="{{ url_for('admin.update_booking_status', booking_id=booking.id, new_status='confirmed') }}"
-          method="POST" style="display:inline;">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Session</th>
+        <th>Date</th>
+        <th>Message</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+      {% for booking in bookings %}
+      <tr>
+        <td>{{ booking.name }}</td>
+        <td>{{ booking.email }}</td>
+        <td>{{ booking.session_type }}</td>
+        <td>{{ booking.date_requested }}</td>
+        <td>{{ booking.message }}</td>
+        <td>{{ booking.status }}</td>
+        <!-- <td>
+          <form action="{{ url_for('admin.update_booking_status', booking_id=booking.id, new_status='confirmed') }}"
+            method="POST" style="display:inline;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-          <button type="submit">Confirm</button>
-        </form>
-        <form action="{{ url_for('admin.update_booking_status', booking_id=booking.id, new_status='declined') }}"
-          method="POST" style="display:inline;">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit">Confirm</button>
+          </form>
+          <form action="{{ url_for('admin.update_booking_status', booking_id=booking.id, new_status='declined') }}"
+            method="POST" style="display:inline;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-          <button type="submit">Decline</button>
-        </form>
-        <form action="{{ url_for('admin.delete_booking', booking_id=booking.id) }}" method="POST"
-          style="display:inline;">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> <button type="submit"
-            onclick="return confirm('Delete this booking?')">Delete</button>
-        </form>
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
+            <button type="submit">Decline</button>
+          </form>
+          <form action="{{ url_for('admin.delete_booking', booking_id=booking.id) }}" method="POST"
+            style="display:inline;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> <button type="submit"
+              onclick="return confirm('Delete this booking?')">Delete</button>
+          </form>
+        </td> -->
 
-  {% if bookings|length == 0 %}
-  <p>No bookings yet.</p>
-  {% endif %}
+        <td>
+          <div class="actions-dropdown-wrapper">
+            <button class="dropdown-toggle">⋮</button>
+            <div class="dropdown-menu hidden">
+              <form action="{{ url_for('admin.update_booking_status', booking_id=booking.id, new_status='confirmed') }}"
+                method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit">✅ Confirm</button>
+              </form>
+              <form action="{{ url_for('admin.update_booking_status', booking_id=booking.id, new_status='declined') }}"
+                method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit">❌ Decline</button>
+              </form>
+              <form action="{{ url_for('admin.delete_booking', booking_id=booking.id) }}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit" onclick="return confirm('Delete this booking?')">🗑️ Delete</button>
+              </form>
+            </div>
+          </div>
+        </td>
+
+
+
+      </tr>
+      {% endfor %}
+    </table>
+
+    {% if bookings|length == 0 %}
+    <p>No bookings yet.</p>
+    {% endif %}
+
+  </div>
 </body>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
 
 </html>

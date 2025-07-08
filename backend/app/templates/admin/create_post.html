@@ -1,7 +1,19 @@
+<!-- templates/admin/create_post.html -->
 <!DOCTYPE html>
 <html>
-<head><title>Create Blog Post</title></head>
+
+<head>
+  <!-- Add this in your HTML <head> -->
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Work+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+  <title>Create Blog Post</title>
+</head>
+
 <body>
+    <div class="container">
+
   <h1>Create Blog Post</h1>
   <form method="POST">
     {{ form.hidden_tag() }}
@@ -11,5 +23,9 @@
     <p>{{ form.submit() }}</p>
   </form>
   <a href="{{ url_for('admin.dashboard') }}">← Back to Dashboard</a>
+</div>
+
+  
 </body>
+
 </html>

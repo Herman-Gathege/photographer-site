@@ -1,40 +1,58 @@
+<!-- templates/admin/dashboard.html -->
 <!DOCTYPE html>
 <html>
 
 <head>
+  <!-- Add this in your HTML <head> -->
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Work+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
   <title>Admin Dashboard</title>
 </head>
 
 <body>
-  <h1>Welcome, {{ user.username }}!</h1>
-  <p><a href="{{ url_for('auth.logout') }}">Logout</a></p>
-  <p><a href="{{ url_for('admin.view_bookings') }}">Manage Bookings</a></p>
+  <div class="container">
 
-  <p><a href="{{ url_for('admin.update_credentials') }}">Change Credentials</a></p>
+    <div class="admin-header">
+
+      <h1>Welcome, {{ user.username }}!</h1>
+      <p><a href="{{ url_for('admin.view_bookings') }}">Manage Bookings</a></p>
+      <p><a href="{{ url_for('admin.update_credentials') }}">Change Credentials</a></p>
+      <p><a href="{{ url_for('main.home') }}">Go to Site</a></p>
+      <p><a href="{{ url_for('auth.logout') }}">Logout</a></p>
+
+    </div>
+
+    <div class="section">
+
+      <h2>Blog Posts</h2>
+      <a href="{{ url_for('admin.create_post') }}">+ Add Post</a>
+      <div class="card">
+
+        <ul>
+          {% for post in posts %}
+          <li>
+            <strong>{{ post.title }}</strong>
+            ({{ post.created_at.strftime('%Y-%m-%d') }})
+            — <a href="{{ url_for('admin.edit_post', post_id=post.id) }}">Edit</a>
+
+            <form action="{{ url_for('admin.delete_post', post_id=post.id) }}" method="POST" style="display:inline;">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button type="submit" onclick="return confirm('Delete this post?')">Delete</button>
+            </form>
 
 
-  <h2>Blog Posts</h2>
-  <a href="{{ url_for('admin.create_post') }}">+ New Post</a>
-  <ul>
-    {% for post in posts %}
-    <li>
-      <strong>{{ post.title }}</strong>
-      ({{ post.created_at.strftime('%Y-%m-%d') }})
-      — <a href="{{ url_for('admin.edit_post', post_id=post.id) }}">Edit</a>
+          </li>
+          {% else %}
+          <p>No blog posts yet.</p>
+          <p>Found {{ posts|length }} posts</p>
 
-      <form action="{{ url_for('admin.delete_post', post_id=post.id) }}" method="POST" style="display:inline;">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-        <button type="submit" onclick="return confirm('Delete this post?')">Delete</button>
-      </form>
-
-      
-    </li>
-    {% else %}
-    <p>No blog posts yet.</p>
-    <p>Found {{ posts|length }} posts</p>
-
-    {% endfor %}
-  </ul>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

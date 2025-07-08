@@ -1,8 +1,16 @@
+<!-- templates/login.html -->
 <!DOCTYPE html>
 <html>
+
 <head>
+  <!-- Add this in your HTML <head> -->
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Work+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
   <title>Login</title>
 </head>
+
 <body>
   <h2>Admin Login</h2>
   <form method="POST">
@@ -18,9 +26,10 @@
   </form>
 
   {% with messages = get_flashed_messages(with_categories=true) %}
-    {% for category, message in messages %}
-      <p style="color: red;">{{ message }}</p>
-    {% endfor %}
+  {% for category, message in messages %}
+  <p style="color: red;">{{ message }}</p>
+  {% endfor %}
   {% endwith %}
 </body>
+
 </html>

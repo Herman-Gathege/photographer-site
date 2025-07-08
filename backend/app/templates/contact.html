@@ -1,10 +1,16 @@
+<!-- templates/contact.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <!-- Add this in your HTML <head> -->
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Work+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+
   <meta charset="UTF-8" />
   <title>Book a Session | Webloom</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-  <style>
+  <!-- <style>
     body {
       font-family: Arial, sans-serif;
       background: #fafafa;
@@ -24,7 +30,7 @@
       background: white;
       padding: 2rem;
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     label {
@@ -33,7 +39,9 @@
       font-weight: bold;
     }
 
-    input, textarea, select {
+    input,
+    textarea,
+    select {
       width: 100%;
       padding: 0.75rem;
       margin-bottom: 1.5rem;
@@ -55,38 +63,43 @@
     button:hover {
       background: #333;
     }
-  </style>
+  </style> -->
 </head>
+
 <body>
 
-<h1>Book a Photography Session</h1>
+  <div class="page-wrapper form-wrapper">
 
-<form method="POST" action="{{ url_for('booking.submit_booking') }}">
-<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <h1>Book a Photography Session</h1>
 
-  <label for="name">Name</label>
-  <input type="text" name="name" required>
+    <form method="POST" action="{{ url_for('booking.submit_booking') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-  <label for="email">Email</label>
-  <input type="email" name="email" required>
+      <label for="name">Name</label>
+      <input type="text" name="name" required>
 
-  <label for="session_type">Session Type</label>
-  <select name="session_type" required>
-    <option value="">--Select--</option>
-    <option value="Portrait">Portrait</option>
-    <option value="Wedding">Wedding</option>
-    <option value="Product">Product</option>
-    <option value="Event">Event</option>
-  </select>
+      <label for="email">Email</label>
+      <input type="email" name="email" required>
 
-  <label for="date_requested">Preferred Date</label>
-  <input type="date" name="date_requested" required>
+      <label for="session_type">Session Type</label>
+      <select name="session_type" required>
+        <option value="">--Select--</option>
+        <option value="Portrait">Portrait</option>
+        <option value="Wedding">Wedding</option>
+        <option value="Product">Product</option>
+        <option value="Event">Event</option>
+      </select>
 
-  <label for="message">Message</label>
-  <textarea name="message" rows="5" placeholder="Anything you'd like to add..."></textarea>
+      <label for="date_requested">Preferred Date</label>
+      <input type="date" name="date_requested" required>
 
-  <button type="submit">Submit Booking</button>
-</form>
+      <label for="message">Message</label>
+      <textarea name="message" rows="5" placeholder="Anything you'd like to add..."></textarea>
+
+      <button class="button" type="submit">Submit Booking</button>
+    </form>
+  </div>
 
 </body>
+
 </html>

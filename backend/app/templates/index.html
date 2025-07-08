@@ -1,11 +1,15 @@
+<!-- templates/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+  <!-- Add this in your HTML <head> -->
+<link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
   <meta charset="UTF-8">
   <title>Welcome | Webloom Photography</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-  <style>
+  <!-- <style>
     body {
       margin: 0;
       padding: 0;
@@ -43,10 +47,10 @@
     a.button:hover {
       background: #f0f0f0;
     }
-  </style>
+  </style> -->
 </head>
 
-<body>
+<body class="page-wrapper centered">
   {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
   <ul>
