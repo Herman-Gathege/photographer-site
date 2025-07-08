@@ -13,7 +13,10 @@ window.addEventListener('keydown', function (e) {
 });
 
 
-
+// Dropdown functionality
+// This code handles dropdown menus in the admin panel
+// It toggles the visibility of the dropdown menu when the toggle button is clicked
+// and hides the menu when clicking outside of it.
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
     toggle.addEventListener('click', function (e) {
@@ -33,5 +36,43 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     });
+  });
+});
+
+
+// Gallery modal functionality
+// This code handles the image gallery modal functionality
+// It opens a modal with a larger view of the clicked image and allows zooming in/out
+// It also closes the modal when clicking outside the image or pressing Escape.
+// It uses the "hidden" class to show/hide the modal.
+document.addEventListener("DOMContentLoaded", function () {
+  const modal = document.getElementById("galleryModal");
+  const modalImg = document.getElementById("modalImage");
+  const closeBtn = document.querySelector(".close-modal");
+
+  document.querySelectorAll(".gallery-image").forEach(img => {
+    img.addEventListener("click", () => {
+      modal.classList.remove("hidden");
+      modal.classList.remove("zoom");
+      modalImg.src = img.dataset.src;
+    });
+  });
+
+  closeBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+    modalImg.src = "";
+  });
+
+  modalImg.addEventListener("click", () => {
+    modal.classList.toggle("zoom");
+  });
+
+  // Optional: close on Escape
+  window.addEventListener("keydown", e => {
+    if (e.key === "Escape") {
+      modal.classList.add("hidden");
+      modal.classList.remove("zoom");
+      modalImg.src = "";
+    }
   });
 });

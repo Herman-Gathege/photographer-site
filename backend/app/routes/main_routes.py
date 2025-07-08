@@ -1,11 +1,13 @@
 from flask import Blueprint, render_template
+from datetime import datetime
+
 
 main_bp = Blueprint('main', __name__)
 
 @main_bp.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index.html', now=datetime.now())
 
 @main_bp.route('/contact')
 def contact():
-    return render_template('contact.html')
+    return render_template('contact.html', now=datetime.now())

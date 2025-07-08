@@ -3,67 +3,113 @@
 <html lang="en">
 
 <head>
-  <!-- Add this in your HTML <head> -->
-<link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Welcome | Webloom Photography</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-  <!-- <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Helvetica', sans-serif;
-      background: #111;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      flex-direction: column;
-      text-align: center;
-    }
 
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5em;
-    }
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Work+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
 
-    p {
-      font-size: 1.2rem;
-      margin-bottom: 1.5em;
-    }
-
-    a.button {
-      background: #fff;
-      color: #111;
-      padding: 10px 20px;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 5px;
-      transition: all 0.3s ease;
-    }
-
-    a.button:hover {
-      background: #f0f0f0;
-    }
-  </style> -->
+  <!-- Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
-<body class="page-wrapper centered">
-  {% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-  <ul>
-    {% for category, message in messages %}
-    <li style="color: green;">{{ message }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-  {% endwith %}
+<body>
 
-  <h1>Webloom Photography</h1>
-  <p>Capturing moments that matter.</p>
-  <a href="{{ url_for('main.contact') }}" class="button">Book a Session</a>
+  <!-- ✅ Navbar -->
+  <header class="navbar">
+    <div class="logo">Webloom</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#faqs">FAQs</a></li>
+        <li><a href="{{ url_for('main.contact') }}" class="button">Book a Session</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ✅ Hero Section -->
+  <section id="hero" class="hero-section centered">
+    <h1>Webloom Photography</h1>
+    <p>Capturing moments that matter.</p>
+    <a href="{{ url_for('main.contact') }}" class="button">Book Now</a>
+  </section>
+
+  <!-- ✅ Gallery/Album -->
+  <section id="gallery" class="section">
+    <h2>Portfolio</h2>
+    <div class="bento-grid">
+      <div class="bento-item wide">
+        <img src="{{ url_for('static', filename='images/hero2.jpeg') }}" alt="Wide Shot" class="gallery-image"
+          data-src="{{ url_for('static', filename='images/hero2.jpeg') }}">
+      </div>
+      <div class="bento-item">
+        <img src="{{ url_for('static', filename='images/hero.jpeg') }}" alt="Portrait 1" class="gallery-image"
+          data-src="{{ url_for('static', filename='images/hero.jpeg') }}">
+      </div>
+      <div class="bento-item tall">
+        <img src="{{ url_for('static', filename='images/hero3.jpeg') }}" alt="Tall Shot" class="gallery-image"
+          data-src="{{ url_for('static', filename='images/hero3.jpeg') }}">
+      </div>
+      <div class="bento-item">
+        <img src="{{ url_for('static', filename='images/hero2.jpeg') }}" alt="Portrait 2" class="gallery-image"
+          data-src="{{ url_for('static', filename='images/hero2.jpeg') }}">
+      </div>
+      <div class="bento-item wide">
+        <img src="{{ url_for('static', filename='images/hero3.jpeg') }}" alt="Wide Shot 2" class="gallery-image"
+          data-src="{{ url_for('static', filename='images/hero3.jpeg') }}">
+      </div>
+      <div class="bento-item">
+        <img src="{{ url_for('static', filename='images/hero.jpeg') }}" alt="Portrait 3" class="gallery-image"
+          data-src="{{ url_for('static', filename='images/hero.jpeg') }}">
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔍 Modal Overlay -->
+  <div id="galleryModal" class="gallery-modal hidden">
+    <span class="close-modal">&times;</span>
+    <img id="modalImage" src="" alt="Full Size Image">
+  </div>
+
+
+
+
+  <!-- ✅ Testimonials -->
+  <section id="testimonials" class="section">
+    <h2>What Clients Say</h2>
+    <div class="testimonial">
+      <p>“Webloom captured our wedding beautifully — highly recommended!”</p>
+      <strong>- Sarah & Mike</strong>
+    </div>
+    <div class="testimonial">
+      <p>“Every shoot with them feels natural and fun.”</p>
+      <strong>- Amanda L.</strong>
+    </div>
+  </section>
+
+  <!-- ✅ FAQs -->
+  <section id="faqs" class="section">
+    <h2>FAQs</h2>
+    <div class="faq">
+      <h4>How do I book a session?</h4>
+      <p>Click on "Book a Session" in the menu or visit the contact page.</p>
+    </div>
+    <div class="faq">
+      <h4>Do you travel?</h4>
+      <p>Yes, I’m available for travel depending on the project.</p>
+    </div>
+  </section>
+
+  <!-- ✅ Footer -->
+  <footer class="footer centered">
+    <p>&copy; {{ now.year }} Webloom Photography — All Rights Reserved.</p>
+
+
+    <p><a href="#hero">Back to top ↑</a></p>
+  </footer>
 
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
