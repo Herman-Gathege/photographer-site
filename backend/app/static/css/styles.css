@@ -25,6 +25,10 @@
   padding: 0;
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -36,7 +40,13 @@ body {
   line-height: 1.6;
   padding: 2rem;
   scroll-behavior: smooth;
+  cursor: none;
 }
+
+body, a, button, .button {
+  cursor: none !important;
+}
+
 
 /* === TYPOGRAPHY === */
 h1, h2, h3, h4, h5 {
@@ -86,7 +96,7 @@ button {
   border-radius: var(--radius);
   font-weight: 600;
   font-size: 1rem;
-  cursor: pointer;
+  /* cursor: pointer; */
   transition: var(--transition);
 }
 
@@ -206,7 +216,7 @@ ul li a:hover {
   border: none;
   font-size: 1.5rem;
   color: #93B1A6;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .dropdown-menu {
@@ -237,7 +247,7 @@ ul li a:hover {
   border: none;
   width: 100%;
   font-size: 0.95rem;
-  cursor: pointer;
+  /* cursor: pointer; */
   border-radius: 4px;
 }
 
@@ -267,7 +277,18 @@ ul li a:hover {
   font-family: var(--font-heading);
   font-size: 1.8rem;
   color: var(--color-muted);
+  text-decoration: none;
 }
+
+a.logo,
+a.logo:visited,
+a.logo:hover,
+a.logo:focus,
+a.logo:active {
+  text-decoration: none;
+  color: var(--color-muted);
+}
+
 
 /* Hamburger */
 .hamburger {
@@ -276,7 +297,7 @@ ul li a:hover {
   border: none;
   font-size: 2rem;
   color: var(--color-muted);
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 /* Desktop Nav */
@@ -374,6 +395,26 @@ ul li a:hover {
   font-size: 1.1rem;
 }
 
+.hero-section h1,
+.hero-section p,
+.hero-section .button {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.hero-section h1 { animation-delay: 0.2s; }
+.hero-section p { animation-delay: 0.4s; }
+.hero-section .button { animation-delay: 0.6s; }
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
 /* === GALLERY === */
 .bento-grid {
   display: grid;
@@ -458,7 +499,7 @@ ul li a:hover {
   right: 2rem;
   font-size: 2rem;
   color: var(--color-muted);
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .hidden {
@@ -481,11 +522,12 @@ ul li a:hover {
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow);
-  transition: transform 0.3s ease;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .feature-card:hover {
-  transform: scale(1.02);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
 .feature-card .overlay {
@@ -522,24 +564,46 @@ ul li a:hover {
 
 
 /* === TESTIMONIALS === */
+#testimonials {
+  width: 100%;
+  padding: 2rem 1rem;
+  overflow-x: hidden;
+}
+
+.testimonials-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 100%;
+}
+
 .testimonial {
   background-color: var(--color-panel);
   padding: 2rem;
-  margin-top: 1.5rem;
   border-left: 4px solid var(--color-accent);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
+  flex: 1 1 300px;
+  max-width: 300px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease;
+}
+
+.testimonial:hover {
+  transform: translateY(-4px);
 }
 
 .testimonial p {
   font-style: italic;
   color: var(--color-muted);
+  margin-bottom: 1rem;
 }
 
 .testimonial strong {
   display: block;
-  margin-top: 0.5rem;
   color: var(--color-text);
+  font-weight: bold;
 }
 
 /* === FAQ SECTION === */
@@ -579,11 +643,87 @@ ul li a:hover {
   color: var(--color-muted);
 }
 
+/* === CONTACT SECTION === */
+.contact-section {
+  position: relative;
+  background: 
+    linear-gradient(rgba(4, 13, 18, 0.7), rgba(24, 61, 61, 0.7)),
+    url('/static/images/hero5.jpeg') center center / cover no-repeat;
+  padding: 6rem 2rem;
+  text-align: center;
+  color: var(--color-text);
+  background-attachment: fixed;
+  border-radius: var(--radius);
+  margin-top: 4rem;
+}
+
+.contact-overlay {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.contact-section h2 {
+  font-size: 2.5rem;
+  color: var(--color-muted);
+  margin-bottom: 1rem;
+  font-family: var(--font-heading);
+}
+
+.contact-section p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: var(--color-text);
+}
+
+.contact-section .button {
+  font-size: 1.1rem;
+  padding: 0.75rem 2rem;
+}
+
+/* === CUSTOM CURSOR === */
+#custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: rgba(93, 131, 116, 0.7);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
+  mix-blend-mode: difference;
+}
+
+
+body:hover #custom-cursor {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+
+
+
+
 
 
 
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
+
+  .contact-section {
+    background-attachment: scroll;
+    padding: 4rem 1.5rem;
+  }
+
+  .contact-section h2 {
+    font-size: 2rem;
+  }
+
+  .contact-section p {
+    font-size: 1rem;
+  }
+
   .page-wrapper, .container {
     padding: 1rem;
   }
@@ -644,6 +784,7 @@ ul li a:hover {
 
    .hamburger {
     display: block;
+    margin-left: 200px;
   }
 
   .nav-container {
@@ -701,6 +842,16 @@ ul li a:hover {
       transform: translateY(0);
     }
   }
+
+  .testimonials-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .testimonial {
+    max-width: 100%;
+    max-height: fit-content;
+  }
 }
 
 @media (max-width: 600px) {
@@ -723,4 +874,6 @@ ul li a:hover {
   .hero-section p {
     font-size: 1rem;
   }
+
+ 
 }

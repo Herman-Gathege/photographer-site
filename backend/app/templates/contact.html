@@ -18,7 +18,7 @@
 
   <!-- ✅ Navbar Reuse -->
   <header class="navbar">
-    <div class="logo">Webloom</div>
+    <a href="{{ url_for('main.home') }}" class="logo">Webloom</a>
 
     <!-- Hamburger Icon -->
     <button class="hamburger" id="hamburgerBtn">&#9776;</button>
@@ -89,6 +89,9 @@
     <p>&copy; {{ now.year }} Webloom Photography — All Rights Reserved.</p>
     <p><a href="#booking">Back to top ↑</a></p>
   </footer>
+
+    <div id="custom-cursor"></div>
+
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
 </body>

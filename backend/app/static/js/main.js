@@ -83,3 +83,48 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+
+// Custom cursor
+document.addEventListener("DOMContentLoaded", () => {
+  const cursor = document.getElementById("custom-cursor");
+
+  let mouseX = 0;
+  let mouseY = 0;
+  let currentX = 0;
+  let currentY = 0;
+  const speed = 0.4;
+
+  document.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  function animate() {
+    currentX += (mouseX - currentX) * speed;
+    currentY += (mouseY - currentY) * speed;
+
+    // 👇 Apply clean left/top and single transform
+    cursor.style.left = `${currentX}px`;
+    cursor.style.top = `${currentY}px`;
+    cursor.style.transform = `translate(-50%, -50%)`;
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  // Hover effect
+  const interactive = document.querySelectorAll("a, button, .button");
+
+  interactive.forEach((el) => {
+    el.addEventListener("mouseenter", () => {
+      cursor.style.width = "40px";
+      cursor.style.height = "40px";
+    });
+    el.addEventListener("mouseleave", () => {
+      cursor.style.width = "20px";
+      cursor.style.height = "20px";
+    });
+  });
+});

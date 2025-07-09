@@ -21,7 +21,8 @@
   <!-- ✅ Navbar -->
 
   <header class="navbar">
-    <div class="logo">Webloom</div>
+    <a href="{{ url_for('main.home') }}" class="logo">Webloom</a>
+
 
     <!-- Hamburger Icon -->
     <button class="hamburger" id="hamburgerBtn">&#9776;</button>
@@ -124,19 +125,21 @@
 
 
 
-
   <!-- ✅ Testimonials -->
   <section id="testimonials" class="section">
     <h2 class="centered">What Clients Say</h2>
-    <div class="testimonial">
-      <p>“Webloom captured our wedding beautifully — highly recommended!”</p>
-      <strong>- Sarah & Mike</strong>
-    </div>
-    <div class="testimonial">
-      <p>“Every shoot with them feels natural and fun.”</p>
-      <strong>- Amanda L.</strong>
+    <div class="testimonials-wrapper">
+      <div class="testimonial">
+        <p>“Webloom captured our wedding beautifully — highly recommended!”</p>
+        <strong>- Sarah & Mike</strong>
+      </div>
+      <div class="testimonial">
+        <p>“Every shoot with them feels natural and fun.”</p>
+        <strong>- Amanda L.</strong>
+      </div>
     </div>
   </section>
+
 
   <!-- ✅ FAQs -->
   <section id="faqs" class="section">
@@ -151,6 +154,16 @@
     </div>
   </section>
 
+  <!-- ✅ Contact Section -->
+  <section id="contact" class="contact-section">
+    <div class="contact-overlay">
+      <h2>Let's Work Together</h2>
+      <p>Whether it's your big day or a creative portrait, I'm here to capture it beautifully.</p>
+      <a href="{{ url_for('main.contact') }}" class="button">Send a Message</a>
+    </div>
+  </section>
+
+
   <!-- ✅ Footer -->
   <footer class="footer centered">
     <p>&copy; {{ now.year }} Webloom Photography — All Rights Reserved.</p>
@@ -159,7 +172,10 @@
     <p><a href="#hero">Back to top ↑</a></p>
   </footer>
 
+  <div id="custom-cursor"></div>
+
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  
 </body>
 
 </html>
