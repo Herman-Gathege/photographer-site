@@ -32,7 +32,11 @@
 
         <ul>
           {% for post in posts %}
-          <li>
+          <li style="margin-bottom: 1.5rem;">
+            {% if post.image_url %}
+            <img src="{{ post.image_url }}" alt="{{ post.title }}"
+              style="max-width: 100px; height: auto; vertical-align: middle; border-radius: 4px; margin-right: 10px;">
+            {% endif %}
             <strong>{{ post.title }}</strong>
             ({{ post.created_at.strftime('%Y-%m-%d') }})
             — <a href="{{ url_for('admin.edit_post', post_id=post.id) }}">Edit</a>
@@ -41,15 +45,12 @@
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
               <button type="submit" onclick="return confirm('Delete this post?')">Delete</button>
             </form>
-
-
           </li>
           {% else %}
           <p>No blog posts yet.</p>
-          <p>Found {{ posts|length }} posts</p>
-
           {% endfor %}
         </ul>
+
       </div>
     </div>
   </div>

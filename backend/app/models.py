@@ -16,6 +16,8 @@ class BlogPost(db.Model):
     content = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     image_url = db.Column(db.String(255))
+    image_class = db.Column(db.String(20))  # Optional: 'wide', 'tall', or ''
+
 
 class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)

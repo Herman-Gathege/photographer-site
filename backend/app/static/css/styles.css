@@ -40,12 +40,12 @@ body {
   line-height: 1.6;
   padding: 2rem;
   scroll-behavior: smooth;
-  cursor: none;
+  /* cursor: none; */
 }
 
-body, a, button, .button {
+/* body, a, button, .button {
   cursor: none !important;
-}
+} */
 
 
 /* === TYPOGRAPHY === */
@@ -216,7 +216,7 @@ ul li a:hover {
   border: none;
   font-size: 1.5rem;
   color: #93B1A6;
-  /* cursor: pointer; */
+  cursor: pointer;
 }
 
 .dropdown-menu {
@@ -247,7 +247,7 @@ ul li a:hover {
   border: none;
   width: 100%;
   font-size: 0.95rem;
-  /* cursor: pointer; */
+  cursor: pointer;
   border-radius: 4px;
 }
 

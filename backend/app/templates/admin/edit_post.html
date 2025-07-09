@@ -3,31 +3,38 @@
 <html>
 
 <head>
-  <!-- Add this in your HTML <head> -->
   <link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Work+Sans:wght@300;400;500;600&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-
   <title>Edit Blog Post</title>
 </head>
 
 <body>
   <div class="container">
-  <h1>Edit Blog Post</h1>
+    <h1>Edit Blog Post</h1>
 
-  <form method="POST">
-    {{ form.hidden_tag() }}
+    <form method="POST" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
 
-    <p>{{ form.title.label }}<br>{{ form.title() }}</p>
-    <p>{{ form.content.label }}<br>{{ form.content() }}</p>
-    <p>{{ form.image_url.label }}<br>{{ form.image_url() }}</p>
-    <p>{{ form.submit(value='Update') }}</p>
-  </form>
+      <p>{{ form.title.label }}<br>{{ form.title() }}</p>
+      <p>{{ form.content.label }}<br>{{ form.content() }}</p>
 
-  <a href="{{ url_for('admin.dashboard') }}">← Back to Dashboard</a>
+      <!-- File upload -->
+      <p>{{ form.image.label }}<br>{{ form.image() }}</p>
+
+      <!-- Manual image URL fallback -->
+      <p>Or paste Image URL<br>{{ form.image_url() }}</p>
+
+      {% if post.image_url %}
+      <p>Current Image:</p>
+      <img src="{{ post.image_url }}" alt="Current Image" style="max-width: 300px;">
+      {% endif %}
+
+      <p>{{ form.submit(value='Update') }}</p>
+    </form>
+
+    <a href="{{ url_for('admin.dashboard') }}">← Back to Dashboard</a>
   </div>
-
-  
 </body>
 
 </html>

@@ -40,7 +40,7 @@
   <!-- ✅ Gallery/Album -->
   <section id="gallery" class="section">
     <h2 class="centered">Gallery</h2>
-    <div class="bento-grid">
+    <!-- <div class="bento-grid">
       <div class="bento-item wide">
         <img src="{{ url_for('static', filename='images/pic3.jpeg') }}" alt="Wide Shot" class="gallery-image"
           data-src="{{ url_for('static', filename='images/pic3.jpeg') }}">
@@ -65,7 +65,19 @@
         <img src="{{ url_for('static', filename='images/hero.jpeg') }}" alt="Portrait 3" class="gallery-image"
           data-src="{{ url_for('static', filename='images/hero.jpeg') }}">
       </div>
+    </div> -->
+    <div class="bento-grid">
+      {% for post in posts %}
+      {% if post.image_url %}
+      <div class="bento-item {{ post.image_class or '' }}">
+        <img src="{{ post.image_url }}" alt="{{ post.title }}" class="gallery-image" data-src="{{ post.image_url }}">
+      </div>
+      {% endif %}
+      {% else %}
+      <p class="centered">No posts available for the gallery yet.</p>
+      {% endfor %}
     </div>
+
   </section>
 
   <!-- 🔍 Modal Overlay -->
@@ -82,7 +94,7 @@
     <p><a href="#gallery">Back to top ↑</a></p>
   </footer>
 
-    <div id="custom-cursor"></div>
+  <div id="custom-cursor"></div>
 
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>

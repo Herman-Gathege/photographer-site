@@ -7,6 +7,8 @@ from app.models import BlogPost, Booking, User, db
 from slugify import slugify
 from werkzeug.security import generate_password_hash
 from sqlalchemy import or_, func
+from app.utils.cloudinary_helpers import upload_image  # 👈 import helper
+from werkzeug.utils import secure_filename 
 
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
@@ -24,21 +26,25 @@ def create_post():
     form = BlogPostForm()
     if form.validate_on_submit():
         slug = slugify(form.title.data)
+        image_url = None
 
+        if form.image.data:
+            image_file = form.image.data
+            image_url = upload_image(image_file)
 
         post = BlogPost(
             title=form.title.data,
             content=form.content.data,
-            image_url=form.image_url.data,
+            image_url=image_url,
             slug=slug 
         )
         db.session.add(post)
         db.session.commit()
         flash("Post created!", "success")
         return redirect(url_for('admin.dashboard'))
+
     return render_template("admin/create_post.html", form=form)
 
-# Edit a blog post
 @admin_bp.route('/blog/edit/<int:post_id>', methods=['GET', 'POST'])
 @login_required
 def edit_post(post_id):
@@ -48,7 +54,15 @@ def edit_post(post_id):
     if form.validate_on_submit():
         post.title = form.title.data
         post.content = form.content.data
-        post.image_url = form.image_url.data
+
+        # Check if new image file uploaded
+        if form.image.data:
+            file = form.image.data
+            post.image_url = upload_image(file)
+        else:
+            # Use manually entered image URL if provided
+            post.image_url = form.image_url.data
+
         db.session.commit()
         flash("Post updated!", "success")
         return redirect(url_for('admin.dashboard'))

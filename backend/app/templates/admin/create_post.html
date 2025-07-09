@@ -1,31 +1,29 @@
-<!-- templates/admin/create_post.html -->
 <!DOCTYPE html>
 <html>
 
 <head>
-  <!-- Add this in your HTML <head> -->
   <link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Work+Sans:wght@300;400;500;600&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-
   <title>Create Blog Post</title>
 </head>
 
 <body>
-    <div class="container">
+  <div class="container">
+    <h1>Create Blog Post</h1>
 
-  <h1>Create Blog Post</h1>
-  <form method="POST">
-    {{ form.hidden_tag() }}
-    <p>{{ form.title.label }}<br>{{ form.title() }}</p>
-    <p>{{ form.content.label }}<br>{{ form.content() }}</p>
-    <p>{{ form.image_url.label }}<br>{{ form.image_url() }}</p>
-    <p>{{ form.submit() }}</p>
-  </form>
-  <a href="{{ url_for('admin.dashboard') }}">← Back to Dashboard</a>
-</div>
+    <!-- ✅ Must include enctype="multipart/form-data" for file upload -->
+    <form method="POST" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
 
-  
+      <p>{{ form.title.label }}<br>{{ form.title() }}</p>
+      <p>{{ form.content.label }}<br>{{ form.content() }}</p>
+      <p>{{ form.image.label }}<br>{{ form.image() }}</p> <!-- ✅ updated field -->
+      <p>{{ form.submit() }}</p>
+    </form>
+
+    <a href="{{ url_for('admin.dashboard') }}">← Back to Dashboard</a>
+  </div>
 </body>
 
 </html>
