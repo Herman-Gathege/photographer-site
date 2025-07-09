@@ -19,67 +19,77 @@
   <!-- ✅ Navbar Reuse -->
   <header class="navbar">
     <div class="logo">Webloom</div>
-    <nav>
-      <ul class="nav-links">
-        <li><a href="{{ url_for('main.home') }}">Home</a></li>
-        <li><a href="{{ url_for('main.home') }}#gallery">Gallery</a></li>
-        <li><a href="{{ url_for('main.home') }}#testimonials">Testimonials</a></li>
-        <li><a href="{{ url_for('main.home') }}#faqs">FAQs</a></li>
-        <li><a href="{{ url_for('main.contact') }}" class="button">Book a Session</a></li>
-      </ul>
+
+    <!-- Hamburger Icon -->
+    <button class="hamburger" id="hamburgerBtn">&#9776;</button>
+
+    <nav class="nav-container">
+      <div class="nav-content" id="navMenu">
+        <ul class="nav-links">
+          <li><a href="{{ url_for('main.home') }}">Home</a></li>
+          <li><a href="{{ url_for('main.gallery') }}">Gallery</a></li>
+          <li><a href="{{ url_for('main.blog') }}">Blog</a></li>
+        </ul>
+        <div class="nav-cta">
+          <a href="{{ url_for('main.contact') }}" class="button">Book a Session</a>
+        </div>
+      </div>
     </nav>
   </header>
 
+
+
   <!-- ✅ Form Container -->
-  <div class="page-wrapper">
-    <section class="form-wrapper">
-      <h1 class="centered">Book a Photography Session</h1>
+  <!-- <div class="page-wrapper"> -->
+  <section id="booking" class="form-wrapper">
+    <h1 class="centered">Book a Photography Session</h1>
 
-      <!-- Flash messages -->
-      {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-      <ul>
-        {% for category, message in messages %}
-        <li class="flash-{{ category }}">{{ message }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-      {% endwith %}
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul>
+      {% for category, message in messages %}
+      <li class="flash-{{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
 
-      <form method="POST" action="{{ url_for('booking.submit_booking') }}">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <form method="POST" action="{{ url_for('booking.submit_booking') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-        <label for="name">Name</label>
-        <input type="text" name="name" required placeholder="e.g. Jane Doe">
+      <label for="name">Name</label>
+      <input type="text" name="name" required placeholder="e.g. Jane Doe">
 
-        <label for="email">Email</label>
-        <input type="email" name="email" required placeholder="you@example.com">
+      <label for="email">Email</label>
+      <input type="email" name="email" required placeholder="you@example.com">
 
-        <label for="session_type">Session Type</label>
-        <select name="session_type" required>
-          <option value="">--Select--</option>
-          <option value="Portrait">Portrait</option>
-          <option value="Wedding">Wedding</option>
-          <option value="Product">Product</option>
-          <option value="Event">Event</option>
-        </select>
+      <label for="session_type">Session Type</label>
+      <select name="session_type" required>
+        <option value="">--Select--</option>
+        <option value="Portrait">Portrait</option>
+        <option value="Wedding">Wedding</option>
+        <option value="Product">Product</option>
+        <option value="Event">Event</option>
+      </select>
 
-        <label for="date_requested">Preferred Date</label>
-        <input type="date" name="date_requested" required>
+      <label for="date_requested">Preferred Date</label>
+      <input type="date" name="date_requested" required>
 
-        <label for="message">Message</label>
-        <textarea name="message" rows="5" placeholder="Anything you'd like to add..."></textarea>
+      <label for="message">Message</label>
+      <textarea name="message" rows="5" placeholder="Anything you'd like to add..."></textarea>
 
-        <button type="submit" class="button">Submit Booking</button>
-      </form>
-    </section>
-  </div>
+      <button type="submit" class="button">Submit Booking</button>
+    </form>
+  </section>
+  <!-- </div> -->
 
   <!-- ✅ Footer -->
   <footer class="footer centered">
     <p>&copy; {{ now.year }} Webloom Photography — All Rights Reserved.</p>
-    <p><a href="{{ url_for('main.home') }}#hero">Back to top ↑</a></p>
+    <p><a href="#booking">Back to top ↑</a></p>
   </footer>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
 </body>
 

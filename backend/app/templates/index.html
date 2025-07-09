@@ -4,6 +4,8 @@
 
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Welcome | Webloom Photography</title>
 
   <!-- Fonts -->
@@ -17,18 +19,28 @@
 <body>
 
   <!-- ✅ Navbar -->
+
   <header class="navbar">
     <div class="logo">Webloom</div>
-    <nav>
-      <ul class="nav-links">
-        <li><a href="#hero">Home</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#testimonials">Testimonials</a></li>
-        <li><a href="#faqs">FAQs</a></li>
-        <li><a href="{{ url_for('main.contact') }}" class="button">Book a Session</a></li>
-      </ul>
+
+    <!-- Hamburger Icon -->
+    <button class="hamburger" id="hamburgerBtn">&#9776;</button>
+
+    <nav class="nav-container">
+      <div class="nav-content" id="navMenu">
+        <ul class="nav-links">
+          <li><a href="{{ url_for('main.home') }}">Home</a></li>
+          <li><a href="{{ url_for('main.gallery') }}">Gallery</a></li>
+          <li><a href="{{ url_for('main.blog') }}">Blog</a></li>
+        </ul>
+        <div class="nav-cta">
+          <a href="{{ url_for('main.contact') }}" class="button">Book a Session</a>
+        </div>
+      </div>
     </nav>
   </header>
+
+
 
   <!-- ✅ Hero Section -->
   <section id="hero" class="hero-section centered">
@@ -37,9 +49,34 @@
     <a href="{{ url_for('main.contact') }}" class="button">Book Now</a>
   </section>
 
+  <!-- ✅ Informative Feature Section -->
+  <section id="features" class="section">
+    <h2 class="centered">What We Offer</h2>
+    <div class="features-grid">
+      <div class="feature-card weddings">
+        <div class="overlay">
+          <h3>Weddings</h3>
+          <p>Timeless memories for your special day.</p>
+        </div>
+      </div>
+      <div class="feature-card portraits">
+        <div class="overlay">
+          <h3>Portraits</h3>
+          <p>Individual and family sessions with style.</p>
+        </div>
+      </div>
+      <div class="feature-card events">
+        <div class="overlay">
+          <h3>Events</h3>
+          <p>Professional coverage for corporate & social occasions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ✅ Gallery/Album -->
   <section id="gallery" class="section">
-    <h2>Portfolio</h2>
+    <h2 class="centered">Portfolio</h2>
     <div class="bento-grid">
       <div class="bento-item wide">
         <img src="{{ url_for('static', filename='images/hero2.jpeg') }}" alt="Wide Shot" class="gallery-image"
@@ -54,16 +91,24 @@
           data-src="{{ url_for('static', filename='images/hero3.jpeg') }}">
       </div>
       <div class="bento-item">
-        <img src="{{ url_for('static', filename='images/hero2.jpeg') }}" alt="Portrait 2" class="gallery-image"
-          data-src="{{ url_for('static', filename='images/hero2.jpeg') }}">
+        <img src="{{ url_for('static', filename='images/hero4.jpeg') }}" alt="Portrait 2" class="gallery-image"
+          data-src="{{ url_for('static', filename='images/hero4.jpeg') }}">
       </div>
       <div class="bento-item wide">
-        <img src="{{ url_for('static', filename='images/hero3.jpeg') }}" alt="Wide Shot 2" class="gallery-image"
-          data-src="{{ url_for('static', filename='images/hero3.jpeg') }}">
+        <img src="{{ url_for('static', filename='images/hero5.jpeg') }}" alt="Wide Shot 2" class="gallery-image"
+          data-src="{{ url_for('static', filename='images/hero5.jpeg') }}">
+      </div>
+      <div class="bento-item wide">
+        <img src="{{ url_for('static', filename='images/pic1.jpeg') }}" alt="Wide Shot 2" class="gallery-image"
+          data-src="{{ url_for('static', filename='images/pic1.jpeg') }}">
       </div>
       <div class="bento-item">
-        <img src="{{ url_for('static', filename='images/hero.jpeg') }}" alt="Portrait 3" class="gallery-image"
-          data-src="{{ url_for('static', filename='images/hero.jpeg') }}">
+        <img src="{{ url_for('static', filename='images/hero6.png') }}" alt="Portrait 3" class="gallery-image"
+          data-src="{{ url_for('static', filename='images/hero6.png') }}">
+      </div>
+      <div class="bento-item">
+        <img src="{{ url_for('static', filename='images/pic2.jpeg') }}" alt="Portrait 2" class="gallery-image"
+          data-src="{{ url_for('static', filename='images/pic2.jpeg') }}">
       </div>
     </div>
   </section>
@@ -77,9 +122,12 @@
 
 
 
+
+
+
   <!-- ✅ Testimonials -->
   <section id="testimonials" class="section">
-    <h2>What Clients Say</h2>
+    <h2 class="centered">What Clients Say</h2>
     <div class="testimonial">
       <p>“Webloom captured our wedding beautifully — highly recommended!”</p>
       <strong>- Sarah & Mike</strong>
@@ -92,7 +140,7 @@
 
   <!-- ✅ FAQs -->
   <section id="faqs" class="section">
-    <h2>FAQs</h2>
+    <h2 class="centered">FAQs</h2>
     <div class="faq">
       <h4>How do I book a session?</h4>
       <p>Click on "Book a Session" in the menu or visit the contact page.</p>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Work+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <title>Gallery</title>
+</head>
+
+<body>
+
+  <header class="navbar">
+    <div class="logo">Webloom</div>
+
+    <!-- Hamburger Icon -->
+    <button class="hamburger" id="hamburgerBtn">&#9776;</button>
+
+    <nav class="nav-container">
+      <div class="nav-content" id="navMenu">
+        <ul class="nav-links">
+          <li><a href="{{ url_for('main.home') }}">Home</a></li>
+          <li><a href="{{ url_for('main.gallery') }}">Gallery</a></li>
+          <li><a href="{{ url_for('main.blog') }}">Blog</a></li>
+        </ul>
+        <div class="nav-cta">
+          <a href="{{ url_for('main.contact') }}" class="button">Book a Session</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+
+
+  <!-- ✅ Gallery/Album -->
+  <section id="gallery" class="section">
+    <h2 class="centered">Gallery</h2>
+    <div class="bento-grid">
+      <div class="bento-item wide">
+        <img src="{{ url_for('static', filename='images/pic3.jpeg') }}" alt="Wide Shot" class="gallery-image"
+          data-src="{{ url_for('static', filename='images/pic3.jpeg') }}">
+      </div>
+      <div class="bento-item">
+        <img src="{{ url_for('static', filename='images/pic4.jpeg') }}" alt="Portrait 1" class="gallery-image"
+          data-src="{{ url_for('static', filename='images/pic4.jpeg') }}">
+      </div>
+      <div class="bento-item tall">
+        <img src="{{ url_for('static', filename='images/pic5.jpeg') }}" alt="Tall Shot" class="gallery-image"
+          data-src="{{ url_for('static', filename='images/pic5.jpeg') }}">
+      </div>
+      <div class="bento-item">
+        <img src="{{ url_for('static', filename='images/pic6.jpeg') }}" alt="Portrait 2" class="gallery-image"
+          data-src="{{ url_for('static', filename='images/pic6.jpeg') }}">
+      </div>
+      <div class="bento-item wide">
+        <img src="{{ url_for('static', filename='images/pic7.jpeg') }}" alt="Wide Shot 2" class="gallery-image"
+          data-src="{{ url_for('static', filename='images/pic7.jpeg') }}">
+      </div>
+      <div class="bento-item">
+        <img src="{{ url_for('static', filename='images/hero.jpeg') }}" alt="Portrait 3" class="gallery-image"
+          data-src="{{ url_for('static', filename='images/hero.jpeg') }}">
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔍 Modal Overlay -->
+  <div id="galleryModal" class="gallery-modal hidden">
+    <span class="close-modal">&times;</span>
+    <img id="modalImage" src="" alt="Full Size Image">
+  </div>
+
+  <!-- ✅ Footer -->
+  <footer class="footer centered">
+    <p>&copy; {{ now.year }} Webloom Photography — All Rights Reserved.</p>
+
+
+    <p><a href="#gallery">Back to top ↑</a></p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>
