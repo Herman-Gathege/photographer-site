@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Work+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+  <title>Blog - Webloom Photography</title>
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <a href="{{ url_for('main.home') }}" class="logo">Webloom</a>
+    <button class="hamburger" id="hamburgerBtn">&#9776;</button>
+    <nav class="nav-container">
+      <div class="nav-content" id="navMenu">
+        <ul class="nav-links">
+          <li><a href="{{ url_for('main.home') }}">Home</a></li>
+          <li><a href="{{ url_for('main.gallery') }}">Gallery</a></li>
+          <li><a href="{{ url_for('blog.blog_home') }}">Blog</a></li>
+        </ul>
+        <div class="nav-cta">
+          <a href="{{ url_for('main.contact') }}" class="button">Book a Session</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- BLOG POSTS -->
+  <section class="section container">
+    <h2 class="centered">📸 Stories from Behind the Lens</h2>
+
+    {% if posts %}
+    <div class="blog-listing">
+      {% for post in posts %}
+      <div class="blog-entry" onclick="openModal({{ post.id }})">
+        {% if post.images %}
+        <div class="blog-thumbnail">
+          <img src="{{ post.images[0].image_url }}" alt="{{ post.title }}" class="blog-thumb" />
+          <div class="overlay-title">
+            <h3>{{ post.title }}</h3>
+          </div>
+        </div>
+        {% endif %}
+        <div class="blog-meta">
+          <p class="blog-date">{{ post.created_at.strftime('%B %d, %Y') }}</p>
+          <p>{{ post.content[:200] }}...</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="centered">No blog posts yet.</p>
+    {% endif %}
+  </section>
+
+  <!-- MODAL -->
+  <div class="blog-modal hidden" id="blogModal">
+    <div class="modal-content">
+      <div class="carousel-wrapper">
+        <button class="carousel-btn left" onclick="prevSlide()">←</button>
+        <div class="carousel-images" id="carouselImages"></div>
+        <button class="carousel-btn right" onclick="nextSlide()">→</button>
+      </div>
+      <div class="blog-details" id="blogDetails"></div>
+    </div>
+    <span class="close-modal" onclick="closeModal()">×</span>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer centered">
+    <p>&copy; {{ now.year }} Webloom Photography — All Rights Reserved.</p>
+  </footer>
+
+  <!-- JSON DATA INJECTION -->
+  <script id="blog-data" type="application/json">
+    {{ post_json | tojson }}
+  </script>
+
+  <!-- MODAL LOGIC -->
+  <script>
+    const posts = JSON.parse(document.getElementById("blog-data").textContent);
+    const modal = document.getElementById("blogModal");
+    const imagesDiv = document.getElementById("carouselImages");
+    const detailsDiv = document.getElementById("blogDetails");
+
+    function openModal(postId) {
+      const post = posts.find(p => p.id === postId);
+      imagesDiv.innerHTML = "";
+      detailsDiv.innerHTML = "";
+
+      post.images.forEach((img, index) => {
+        const imgEl = document.createElement("img");
+        imgEl.src = img.image_url;
+        imgEl.className = "carousel-img";
+        if (index === 0) imgEl.classList.add("active");
+        imagesDiv.appendChild(imgEl);
+      });
+
+      detailsDiv.innerHTML = `<h2>${post.title}</h2><p>${post.content}</p>`;
+      modal.classList.remove("hidden");
+    }
+
+    function closeModal() {
+      modal.classList.add("hidden");
+    }
+
+    function nextSlide() {
+      const imgs = document.querySelectorAll(".carousel-img");
+      let active = [...imgs].findIndex(img => img.classList.contains("active"));
+      imgs[active].classList.remove("active");
+      imgs[(active + 1) % imgs.length].classList.add("active");
+    }
+
+    function prevSlide() {
+      const imgs = document.querySelectorAll(".carousel-img");
+      let active = [...imgs].findIndex(img => img.classList.contains("active"));
+      imgs[active].classList.remove("active");
+      imgs[(active - 1 + imgs.length) % imgs.length].classList.add("active");
+    }
+  </script>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+
+</body>
+
+</html>

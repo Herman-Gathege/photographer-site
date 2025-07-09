@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Work+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <title>Edit Blog Post</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Edit Blog Post</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+
+      <p>{{ form.title.label }}<br>{{ form.title() }}</p>
+      <p>{{ form.content.label }}<br>{{ form.content() }}</p>
+
+      <!-- Existing images preview with delete buttons -->
+      {% if post.images %}
+        <h3>Current Images:</h3>
+        <div class="image-grid">
+          {% for image in post.images %}
+            <div class="image-card">
+              <img src="{{ image.image_url }}" alt="Image" style="max-width: 150px;">
+              <form action="{{ url_for('blog.delete_blog_image', image_id=image.id, post_id=post.id) }}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit" onclick="return confirm('Delete this image?')">Delete</button>
+              </form>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- Add more images -->
+      <p>{{ form.images.label }}<br>{{ form.images(multiple=true) }}</p>
+
+      <p>{{ form.submit(value='Update Post') }}</p>
+    </form>
+
+    <a href="{{ url_for('admin.dashboard') }}">← Back to Dashboard</a>
+  </div>
+</body>
+
+</html>

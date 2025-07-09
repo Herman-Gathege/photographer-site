@@ -32,7 +32,7 @@
         <ul class="nav-links">
           <li><a href="{{ url_for('main.home') }}">Home</a></li>
           <li><a href="{{ url_for('main.gallery') }}">Gallery</a></li>
-          <li><a href="{{ url_for('main.blog') }}">Blog</a></li>
+          <li><a href="{{ url_for('blog.blog_home') }}">Blog</a></li>
         </ul>
         <div class="nav-cta">
           <a href="{{ url_for('main.contact') }}" class="button">Book a Session</a>
@@ -175,7 +175,7 @@
   <div id="custom-cursor"></div>
 
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-  
+
 </body>
 
 </html>

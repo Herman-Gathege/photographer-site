@@ -10,16 +10,18 @@
 
 <body>
   <div class="container">
-    <h1>Create  Post</h1>
+    <h1>Create Blog Post</h1>
 
-    <!-- ✅ Must include enctype="multipart/form-data" for file upload -->
     <form method="POST" enctype="multipart/form-data">
       {{ form.hidden_tag() }}
 
       <p>{{ form.title.label }}<br>{{ form.title() }}</p>
       <p>{{ form.content.label }}<br>{{ form.content() }}</p>
-      <p>{{ form.image.label }}<br>{{ form.image() }}</p> <!-- ✅ updated field -->
-      <p>{{ form.submit() }}</p>
+
+      <!-- ✅ updated for MultipleFileField -->
+      <p>{{ form.images.label }}<br>{{ form.images(multiple=true) }}</p>
+
+      <p>{{ form.submit(value='Publish') }}</p>
     </form>
 
     <a href="{{ url_for('admin.dashboard') }}">← Back to Dashboard</a>

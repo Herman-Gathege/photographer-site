@@ -1,37 +1,37 @@
 <!-- templates/admin/dashboard.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <!-- Add this in your HTML <head> -->
-  <link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Work+Sans:wght@300;400;500;600&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
 </head>
 
 <body>
   <div class="container">
-
+    <!-- 🔐 Admin Header -->
     <div class="admin-header">
-
       <h1>Welcome, {{ user.username }}!</h1>
       <p><a href="{{ url_for('admin.view_bookings') }}">Manage Bookings</a></p>
       <p><a href="{{ url_for('admin.update_credentials') }}">Change Credentials</a></p>
       <p><a href="{{ url_for('main.home') }}">Go to Site</a></p>
       <p><a href="{{ url_for('auth.logout') }}">Logout</a></p>
-
     </div>
 
+    <!-- 🖼️ Gallery Section -->
     <div class="section">
+      <h2>Gallery Posts</h2>
+      <a href="{{ url_for('admin.create_post') }}" class="button">+ Add to Gallery</a>
 
-      <h2>Blog Posts</h2>
-      <a href="{{ url_for('admin.create_post') }}">+ Add Post</a>
       <div class="card">
-
+        {% if posts %}
         <ul>
           {% for post in posts %}
+          {% if post.post_type == 'gallery' %}
           <li style="margin-bottom: 1.5rem;">
             {% if post.image_url %}
             <img src="{{ post.image_url }}" alt="{{ post.title }}"
@@ -46,11 +46,43 @@
               <button type="submit" onclick="return confirm('Delete this post?')">Delete</button>
             </form>
           </li>
-          {% else %}
-          <p>No blog posts yet.</p>
+          {% endif %}
           {% endfor %}
         </ul>
+        {% else %}
+        <p>No gallery posts yet.</p>
+        {% endif %}
+      </div>
+    </div>
 
+    <!-- ✍️ Blog Section -->
+    <div class="section">
+      <h2>Blog Posts</h2>
+      <a href="{{ url_for('blog.create_blog_post') }}" class="button">Write a Blog Post</a>
+
+      <div class="card">
+        {% if blog_posts %}
+        <ul>
+          {% for post in blog_posts %}
+          <li style="margin-bottom: 1.5rem;">
+            {% if post.images %}
+            <img src="{{ post.images[0].image_url }}" alt="{{ post.title }}"
+              style="max-width: 100px; height: auto; vertical-align: middle; border-radius: 4px; margin-right: 10px;">
+            {% endif %}
+            <strong>{{ post.title }}</strong>
+            ({{ post.created_at.strftime('%Y-%m-%d') }})
+            — <a href="{{ url_for('blog.edit_blog_post', post_id=post.id) }}">Edit</a>
+
+            <form action="{{ url_for('blog.delete_blog_post', post_id=post.id) }}" method="POST" style="display:inline;">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button type="submit" onclick="return confirm('Delete this blog post?')">Delete</button>
+            </form>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p>No blog posts yet.</p>
+        {% endif %}
       </div>
     </div>
   </div>
