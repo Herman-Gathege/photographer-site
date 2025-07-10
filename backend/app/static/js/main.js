@@ -81,8 +81,16 @@ document.addEventListener("DOMContentLoaded", function () {
     hamburger.addEventListener("click", () => {
       navContainer.classList.toggle("show");
     });
+
+    // ✅ Close menu when any nav link is clicked
+    document.querySelectorAll(".nav-links a").forEach(link => {
+      link.addEventListener("click", () => {
+        navContainer.classList.remove("show");
+      });
+    });
   }
 });
+
 
 
 // Custom cursor
