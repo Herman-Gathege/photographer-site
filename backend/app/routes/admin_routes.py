@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
-from app.forms.blog_post_form import BlogPostForm
+# from app.forms.blog_post_form import BlogPostForm
+from app.forms.gallery_post_form import GalleryPostForm
+
 from app.forms.change_credentials_form import ChangeCredentialsForm
 from flask import get_flashed_messages
 from app.models import BlogPost, Booking, User, db
@@ -18,12 +20,14 @@ admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 def dashboard():
     
     posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
-    return render_template("admin/dashboard.html", user=current_user, posts=posts)
+    blog_posts = BlogPost.query.filter_by(post_type='blog').order_by(BlogPost.created_at.desc()).all()
+
+    return render_template("admin/dashboard.html", user=current_user, posts=posts, blog_posts=blog_posts)
 
 @admin_bp.route('/blog/new', methods=['GET', 'POST'])
 @login_required
 def create_post():
-    form = BlogPostForm()
+    form = GalleryPostForm()
     if form.validate_on_submit():
         slug = slugify(form.title.data)
         image_url = None

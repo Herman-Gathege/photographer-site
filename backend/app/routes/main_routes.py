@@ -25,6 +25,6 @@ def gallery():
         
     return render_template('gallery.html', now=datetime.now(), posts=posts)
 
-@main_bp.route('/blog')
-def blog():
-    return render_template('blog.html', now=datetime.now())
+# @main_bp.route('/blog')
+# def blog():
+#     return render_template('blog.html', now=datetime.now())

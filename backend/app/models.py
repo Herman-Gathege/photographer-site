@@ -17,6 +17,17 @@ class BlogPost(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     image_url = db.Column(db.String(255))
     image_class = db.Column(db.String(20))  # Optional: 'wide', 'tall', or ''
+    
+    # ✅ New: distinguish between blog/gallery
+    post_type = db.Column(db.String(50), default="gallery")
+
+    # ✅ New: link to additional images for blog carousels
+    images = db.relationship('BlogImage', backref='post', cascade="all, delete-orphan")
+
+class BlogImage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    image_url = db.Column(db.String(500), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('blog_post.id'))
 
 
 class Booking(db.Model):
